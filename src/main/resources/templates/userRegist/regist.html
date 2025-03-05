@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="#{title.userRegist}"></title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/styleRegistUser.css}">
+</head>
+
+<body>
+	<header>
+		<div class="row">
+			<span class="vertical_middel">ユーザー登録・編集</span>
+		</div>
+		<div class="row">
+			<span class="vertical_middel">ログインユーザーID：[[${loginUserId}]]</span>
+		</div>
+		<div class="row">
+			<span class="vertical_middel">モード：[[${mode}]]</span>
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" class="logButtom" value="ログアウト">
+			</form>
+		</div>
+	</header>
+
+	<main>
+		<form th:action="@{/userRegist/registExcecute}" method="post" th:object="${userResistForm}">
+			<div class="input_area">
+				<div class="row">
+					<input type="hidden" name="modeNum" th:value="${modeNum}">
+					<input type="hidden" name="modeName" th:value="${mode}">
+					<div class="buttomArea">
+						<input type="submit" name="update" class="subButtom" value="実行">
+						<input type="submit" name="back" class="subButtom" value="戻る">
+					</div>
+				</div>
+				<div class="row">
+					<div class="left"><span class="vertical_middel">ユーザーID:</span></div>
+					<div class="right"><input type="text" th:field="*{userId}" disabled><input type="hidden"
+							th:field="*{userId}"></div>
+				</div>
+				<div class="row">
+					<div class="left"><span class="vertical_middel">ユーザー名:</span></div>
+					<div class="right"><input type="text" th:field="*{userName}"></div>
+				</div>
+				<div class="row">
+					<div class="left"><span class="vertical_middel">パスワード:</span></div>
+					<div class="right"><input type="text" th:field="*{password}"></div>
+				</div>
+				<div class="row">
+					<div class="left"><span class="vertical_middel">権限:</span></div>
+					<div class="right"><input type="text" th:field="*{authority}"></div>
+				</div>
+			</div>
+			<div class="err_area" th:if="${#fields.hasErrors('*')}">
+				<ui>
+					<li th:each="err:${#fields.errors('*')}" th:text="${err}" class="errorMessage"></li>
+				</ui>
+			</div>
+		</form>
+	</main>
+</body>
+
+</html>

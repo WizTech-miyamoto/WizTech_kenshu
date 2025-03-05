@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+body {
+	width: 350px;
+	margin: auto;
+	display: flex;
+	align-items: center;
+}
+
+.inputForm::after {
+	content: "";
+	position: absolute;
+	width: 20%;
+	height: 15%;
+	background-image: url("../img/logo.png");
+	background-repeat: no-repeat;
+	background-position: bottom 25px left 80px;
+	opacity: 0.5;
+	z-index: -1;
+}
