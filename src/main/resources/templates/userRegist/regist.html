@@ -37,12 +37,12 @@
 				</div>
 				<div class="row">
 					<div class="left"><span class="vertical_middel">ユーザーID:</span></div>
-					<div class="right"><input type="text" th:field="*{userId}" disabled><input type="hidden"
-							th:field="*{userId}"></div>
+					<div class="right"><input type="text" th:field="*{userid}" disabled><input type="hidden"
+							th:field="*{userid}"></div>
 				</div>
 				<div class="row">
 					<div class="left"><span class="vertical_middel">ユーザー名:</span></div>
-					<div class="right"><input type="text" th:field="*{userName}"></div>
+					<div class="right"><input type="text" th:field="*{username}"></div>
 				</div>
 				<div class="row">
 					<div class="left"><span class="vertical_middel">パスワード:</span></div>
@@ -50,7 +50,7 @@
 				</div>
 				<div class="row">
 					<div class="left"><span class="vertical_middel">権限:</span></div>
-					<div class="right"><input type="text" th:field="*{authority}"></div>
+					<div class="right"><input type="text" th:field="*{role}"></div>
 				</div>
 			</div>
 			<div class="err_area" th:if="${#fields.hasErrors('*')}">

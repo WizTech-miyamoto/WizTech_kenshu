@@ -19,7 +19,7 @@ public class LoginForm {
 	 */
 	@NotBlank
 	@Size(min = 1, max = 3)
-	private String userId;
+	private String username;
 
 	/**
 	 * パスワード

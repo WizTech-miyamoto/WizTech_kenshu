@@ -12,18 +12,18 @@ import lombok.Data;
  */
 @Data
 @Component
-public class EntityUser {
+public class UserEntity {
 
 	/*****フィールド*****/
 	/**
 	 * ユーザーID
 	 */
-	private String userId;
+	private String userid;
 
 	/**
 	 * ユーザー名
 	 */
-	private String userName;
+	private String username;
 
 	/**
 	 * パスワード
@@ -33,7 +33,7 @@ public class EntityUser {
 	/**
 	 * 権限
 	 */
-	private String authority;
+	private String role;
 
 	/**
 	 * 論理削除フラグ
@@ -41,16 +41,16 @@ public class EntityUser {
 	private boolean logicalDeleteFlg;
 
 	public void setEntityLogin(LoginForm form) {
-		this.userId = form.getUserId();
+		this.userid = form.getUsername();
 		this.password = form.getPassword();
 		return;
 	}
 
 	public void setEntityRegist(UserResistForm form) {
-		this.userId = form.getUserId();
-		this.userName = form.getUserName();
+		this.userid = form.getUserid();
+		this.username = form.getUsername();
 		this.password = form.getPassword();
-		this.authority = form.getAuthority();
+		this.role = form.getRole();
 		this.logicalDeleteFlg = false;
 		return;
 	}

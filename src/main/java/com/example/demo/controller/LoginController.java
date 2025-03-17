@@ -1,18 +1,17 @@
 package com.example.demo.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.entity.EntityUser;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
 
@@ -32,22 +31,17 @@ public class LoginController {
 	/**
 	 * HTMLテンプレート名_ログイン画面
 	 */
-	private final String LOGOUT = "redirect:login";
+	private final String REDIRECT_LOGOUT = "redirect:login";
 
 	/**
 	 * HTMLテンプレート名_リスト画面
 	 */
-	private final String FORWARD_HOME = "forward:home";
+	private final String REDIRECT_DASHBOARD = "redirect:dashboard";
 
 	/**
 	 * DI用フィールド_サービス層処理
 	 */
 	private final LoginService service;
-
-	/**
-	 * DI用フィールド_ユーザーEntity
-	 */
-	private final EntityUser user;
 
 	/*****コンストラクタ*****/
 	//	@Autowired
@@ -56,9 +50,8 @@ public class LoginController {
 	 * @param service サービス層処理
 	 * @param user ユーザーEntity
 	 */
-	public LoginController(LoginService service, EntityUser user) {
+	public LoginController(LoginService service, UserEntity user) {
 		this.service = service;
-		this.user = user;
 	}
 
 	/*****メソッド*****/
@@ -67,54 +60,56 @@ public class LoginController {
 	 * @param form 入力フォーム
 	 * @return HTMLテンプレート名
 	 */
+
 	@GetMapping("/login")
 	public String showLogin(@ModelAttribute LoginForm form) {
 		return LOGIN;
 	}
 
+//	@GetMapping("/")
+//	public String forwardLogin(HttpServletRequest req,
+//			@Validated @ModelAttribute LoginForm form,
+//			BindingResult result,
+//			Model model) {
+//		System.out.println("forwardLogin");
+//		return "forward:login";
+//	}
+	
 	@PostMapping("/login")
-	public String showList(HttpServletRequest req,
+	public String validationCheck(HttpServletRequest req,
+			RedirectAttributes reAtt,
 			@Validated @ModelAttribute LoginForm form,
 			BindingResult result,
 			Model model) {
+		
+		System.out.println("login");
+		System.out.println("loginForm:" + form);
+		System.out.println("validation:" + result);
 
 		//	入力エラーの場合、ログイン画面に遷移
 		if (result.hasErrors()) {
 			return LOGIN;
 		}
-		
-		System.out.println(req.getServletPath());
-		System.out.println(req.getRequestURI());
-		System.out.println(req.getRequestURL());
-		
-		/*****入力に問題ない場合、セッションを作成する*****/
-		//	セッション作成（古いセッションがある場合は削除して再作成）
-		req.getSession(true).invalidate();
-		HttpSession session = req.getSession();
-
-		session.setAttribute("loginUserId", form.getUserId());
-
 		/*****業務処理（サービス層）呼び出し*****/
 		//ユーザーIDまたはパスワードがユーザーテーブルに存在しない場合はエラー、ログイン画面に遷移する
-		this.user.setEntityLogin(form);
-		if (!this.service.login(this.user)) {
-			result.addError(new FieldError(result.getObjectName(), "userId", "ユーザーIDまたはパスワードが間違っています"));
-			return LOGIN;
-		}
+//		System.out.println("LoginStart");
+//		if (!this.service.login(form.getUsername(), form.getPassword())) {
+//			result.addError(new FieldError(result.getObjectName(), "userId", "ユーザーIDまたはパスワードが間違っています"));
+//			return LOGIN;
+//		}
+		System.out.println("LoginEnd");
 
-		//	ユーザー登録処理のコントローラーへフォワード
-		return FORWARD_HOME;
+		//リダイレクト先へパラメータを渡す
+
+		//	ユーザー登録処理のコントローラーへリダイレクト
+		return REDIRECT_DASHBOARD;
 	}
 
-	@PostMapping("/logout")
-	public String logout(HttpServletRequest req,
-			@ModelAttribute LoginForm form) {
-		req.getSession(true).invalidate();
-		
-		System.out.println(req.getServletPath());
-		System.out.println(req.getRequestURI());
-		System.out.println(req.getRequestURL());
-		
-		return LOGOUT;
-	}
+//	@PostMapping("/logout")
+//	public String logout(HttpServletRequest req,
+//			@ModelAttribute LoginForm form) {
+//		req.getSession(true).invalidate();
+//
+//		return REDIRECT_LOGOUT;
+//	}
 }

@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.EntityUser;
+import com.example.demo.entity.UserEntity;
 
 /**
  * ログイン画面_DB処理_実装
@@ -29,7 +29,7 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	/**
 	 * 戻り値（ユーザーリスト）
 	 */
-	private List<EntityUser> userList;
+	private List<UserEntity> userList;
 
 	/*****コンストラクタ*****/
 
@@ -45,51 +45,59 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	/*****メソッド*****/
 	/**
 	 * 登録処理_実装
-	 * @return 実行結果
+	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean regist(EntityUser user) {
-		String sql = "INSERT INTO user_table (user_Id,user_Name,password,authority,logical_delete_flg) VALUES(?,?,?,?,?)";
-		this.jdbcTemplate.update(sql,user.getUserId(),user.getUserName(),user.getPassword(),user.getAuthority(),false);
+	public boolean regist(UserEntity user) {
+		String sql = "INSERT INTO users_table (userId,username,password,role,logical_delete_flg) VALUES(?,?,?,?,?)";
+		this.jdbcTemplate.update(sql,user.getUserid(),user.getUsername(),user.getPassword(),user.getRole(),false);
 		System.out.println("登録処理完了");
 		return true;
 	}
 
 	/**
 	 * 更新処理_実装
-	 * @return 実行結果
+	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean update(EntityUser user) {
-		String sql = "UPDATE user_table SET user_Name=?,password=?,authority=? WHERE user_id=?";
-		this.jdbcTemplate.update(sql,user.getUserName(),user.getPassword(),user.getAuthority(),user.getUserId());
+	public boolean update(UserEntity user) {
+		String sql = "UPDATE users_table SET username=?,password=?,role=? WHERE userid=?";
+		this.jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getRole(),user.getUserid());
 		System.out.println("更新処理完了");
 		return true;
 	}
 
 	/**
 	 * 削除処理_実装
-	 * @return 実行結果
+	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean delete(EntityUser user) {
-		String sql = "UPDATE user_table SET logical_delete_flg=true WHERE user_id=?";
-		this.jdbcTemplate.update(sql,user.getUserId());
+	public boolean logicalDelete(UserEntity user) {
+		String sql = "UPDATE users_table SET logical_delete_flg=true WHERE userid=?";
+		this.jdbcTemplate.update(sql,user.getUserid());
 		System.out.println("削除処理完了");
 		return true;
 	}
 
+	/**
+	 * 新ユーザーID取得処理_実装
+	 * @return 新データのユーザーID String
+	 */
 	@Override
 	public String getNextUseId() {
-		String sql = "SELECT MAX(user_id) AS maxId FROM user_table";
+		String sql = "SELECT MAX(userid) AS maxId FROM users_table";
 		int maxUserId = this.jdbcTemplate.queryForObject(sql, int.class) + 1;
-		this.nextUserId = String.format("%03d", maxUserId);
+		this.nextUserId = "%03d".formatted(maxUserId);
 		return this.nextUserId;
 	}
 
+	/**
+	 * ユーザーテーブルリスト取得処理_実装
+	 * @return ユーザーテーブルリスト List<UserEntity>
+	 */
 	@Override
-	public List<EntityUser> getUserList() {
-		this.userList = jdbcTemplate.query("SELECT * FROM user_table WHERE logical_delete_flg=0", new DataClassRowMapper<>(EntityUser.class));
+	public List<UserEntity> getUserList() {
+		this.userList = jdbcTemplate.query("SELECT * FROM users_table WHERE logical_delete_flg=0", new DataClassRowMapper<>(UserEntity.class));
 		return this.userList;
 	}
 

@@ -16,14 +16,15 @@ public class UserResistForm {
 	/**
 	 * ユーザーID
 	 */
-	private String userId;
+	@NotBlank
+	private String userid;
 
 	/**
 	 * ユーザー名
 	 */
 	@NotBlank
 	@Size(min = 1, max = 20)
-	private String userName;
+	private String username;
 
 	/**
 	 * パスワード
@@ -37,7 +38,6 @@ public class UserResistForm {
 	 * 権限
 	 */
 	@NotBlank
-	@Pattern(regexp = "[0-9]*")
-	@Size(min = 1, max = 1)
-	private String authority;
+	@Pattern(regexp = "[A-Z]*")
+	private String role;
 }

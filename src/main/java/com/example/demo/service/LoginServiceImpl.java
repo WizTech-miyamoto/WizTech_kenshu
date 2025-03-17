@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.EntityUser;
 import com.example.demo.repository.LoginRepository;
 
 /**
@@ -32,16 +32,25 @@ public class LoginServiceImpl implements LoginService {
 	//	@Autowired
 	public LoginServiceImpl(LoginRepository repository) {
 		this.repository = repository;
-		this.loginResult = true;
+		this.loginResult = false;
 	}
 
 	/*****メソッド*****/
 	/**
 	 *　ログイン処理_実装
+	 * @return ログイン結果 boolean
 	 */
-	@Override
-	public boolean login(EntityUser user) {
-		this.loginResult = repository.login(user);
+
+	public boolean login(String userid, String password) {
+		this.loginResult = false;
+		System.out.println("LoginServiceStart");
+		String inPass = new BCryptPasswordEncoder().encode(password);
+		String dbPass = repository.getPassword(userid);
+		System.out.println("inPass:"+inPass);
+		System.out.println("dbPass:"+dbPass);
+		if (inPass.equals(dbPass)) {
+			this.loginResult = true;
+		}
 		return this.loginResult;
 	}
 

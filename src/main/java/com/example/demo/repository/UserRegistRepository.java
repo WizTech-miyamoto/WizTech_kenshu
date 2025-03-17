@@ -2,7 +2,7 @@ package com.example.demo.repository;
 
 import java.util.List;
 
-import com.example.demo.entity.EntityUser;
+import com.example.demo.entity.UserEntity;
 
 /**
  * ユーザー登録画面_DB処理_インターフェース
@@ -15,19 +15,19 @@ public interface UserRegistRepository {
 	 * ユーザー登録処理_抽象
 	 * @return 実行結果
 	 */
-	boolean regist(EntityUser user);
+	boolean regist(UserEntity user);
 	
 	/**
 	 * ユーザー更新処理_抽象
 	 * @return 実行結果
 	 */
-	boolean update(EntityUser user);
+	boolean update(UserEntity user);
 
 	/**
 	 * ユーザー削除処理_抽象
 	 * @return 実行結果
 	 */
-	boolean delete(EntityUser user);
+	boolean logicalDelete(UserEntity user);
 
 	/**
 	 * ユーザーID最大値取得処理_抽象
@@ -39,6 +39,6 @@ public interface UserRegistRepository {
 	 * ユーザーリスト取得_抽象
 	 * @return
 	 */
-	List<EntityUser> getUserList();
+	List<UserEntity> getUserList();
 	
 }

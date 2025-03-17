@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title th:text="#{title.home}"></title>
+	<title th:text="#{title.dashboard}"></title>
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 	<link rel="stylesheet" th:href="@{/css/styleHome.css}">
 </head>
@@ -12,7 +12,7 @@
 	<header>
 		<span>ユーザー一覧</span>
 		<span>ログインユーザーID：[[${loginUserId}]]</span>
-		<form th:action="@{/logout}" method="post"><input type="submit" class="logButtom" value="ログアウト"></form>
+		<form th:action="@{/logout}" method="post"><input type="submit" name="logout" class="logButtom" value="ログアウト"></form>
 	</header>
 	<main>
 		<div th:if="${userList} != null">
@@ -36,16 +36,16 @@
 							<form th:action="@{/userRegist/regist}" method="post">
 								<input type="submit" name="edit" class="subButtom" value="編集">
 								<input type="submit" name="delete" class="subButtom" value="削除">
-								<input type="hidden" th:name="userId" th:value="${user.userId}">
-								<input type="hidden" th:name="userName" th:value="${user.userName}">
+								<input type="hidden" th:name="userid" th:value="${user.userid}">
+								<input type="hidden" th:name="username" th:value="${user.username}">
 								<input type="hidden" th:name="password" th:value="${user.password}">
-								<input type="hidden" th:name="authority" th:value="${user.authority}">
+								<input type="hidden" th:name="role" th:value="${user.role}">
 							</form>
 						</td>
-						<td th:text="${user.userId}"></td>
-						<td th:text="${user.userName}"></td>
+						<td th:text="${user.userid}"></td>
+						<td th:text="${user.username}"></td>
 						<td th:text="${user.password}"></td>
-						<td th:text="${user.authority}"></td>
+						<td th:text="${user.role}"></td>
 					</tr>
 				</table>
 			</div>
