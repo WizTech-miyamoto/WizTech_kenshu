@@ -20,7 +20,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 	 * 戻り値（ログイン結果）
 	 */
 	private String loginPassword;
-	
+
 	/**
 	 * DI用コンストラクタ
 	 * @param jdbcTemplate jdbcオブジェクト
@@ -38,11 +38,16 @@ public class LoginRepositoryImpl implements LoginRepository {
 	 */
 	@Override
 	public String getPassword(String userid) {
-//		System.out.println("RepositoryStart");
-		String sql = "SELECT password FROM users_table WHERE userid=?";
-		
-		this.loginPassword = jdbcTemplate.queryForObject(sql, String.class, userid);
-//		System.out.println("GetPassword="+this.loginPassword);
+		//		System.out.println("RepositoryStart");
+		String sql = "SELECT password FROM users WHERE userid=?";
+
+		try {
+			this.loginPassword = jdbcTemplate.queryForObject(sql, String.class, userid);
+		} catch (Exception e) {
+			System.out.println("userid is not found : " + e.getMessage());
+			return null;
+		}
+		//		System.out.println("GetPassword="+this.loginPassword);
 		return this.loginPassword;
 	}
 

@@ -38,17 +38,19 @@ public class ConfigSecurity {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.formLogin(login -> login
 				.loginPage("/login").permitAll()
-//				.loginProcessingUrl("/dashboard")
 				.defaultSuccessUrl("/dashboard")
 				);
-		http.logout(logout -> logout.logoutSuccessUrl("/login"));
+//		http.logout(logout -> logout.logoutSuccessUrl("/login"));
 		http.authorizeHttpRequests(authz -> authz
-				.requestMatchers("/").permitAll()
+//				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//				.requestMatchers("/login").permitAll()
 				.requestMatchers("/css/**").permitAll()
 				.requestMatchers("/img/**").permitAll()
 				.requestMatchers("/js/**").permitAll()
-				//				.anyRequest().permitAll());
-				.anyRequest().authenticated());
+				.requestMatchers("/userRegist/regist").permitAll()
+				.requestMatchers("/userRegist/registExcecute").permitAll()
+				.anyRequest().authenticated()
+				);
 		return http.build();
 	}
 

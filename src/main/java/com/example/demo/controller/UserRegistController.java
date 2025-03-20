@@ -71,21 +71,21 @@ public class UserRegistController {
 	 */
 	@GetMapping("/dashboard")
 	public String showList(HttpServletRequest req,
-//			@Validated @ModelAttribute LoginForm form,
-//			BindingResult result,
+			//			@Validated @ModelAttribute LoginForm form,
+			//			BindingResult result,
 			Model model) {
-		
+
 		System.out.println("dashboard");
-		
-//		//	入力エラーの場合、ログイン画面に遷移
-//		if (result.hasErrors()) {
-//			return LOGIN;
-//		}
+
+		//		//	入力エラーの場合、ログイン画面に遷移
+		//		if (result.hasErrors()) {
+		//			return LOGIN;
+		//		}
 
 		//ユーザーテーブルからユーザー情報のリストを取得する
 		List<UserEntity> userList = this.service.getUserList();
 
-//		model.addAttribute("loginUserId", form.getUsername());
+		//		model.addAttribute("loginUserId", form.getUsername());
 		model.addAttribute("userList", userList);
 
 		//		System.out.println(req.getServletPath());
@@ -94,6 +94,15 @@ public class UserRegistController {
 
 		//	リスト画面への遷移
 		return DASHBOARD;
+	}
+
+	@GetMapping("/userRegist/regist")
+	public String testUserRegist(@ModelAttribute UserResistForm form,
+			Model model) {
+		model.addAttribute("mode", "登録");
+		model.addAttribute("modeNum", 1);
+		form.setUserid(this.service.getNextUseId());
+		return USER_REGIST;
 	}
 
 	/**

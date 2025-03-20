@@ -1,8 +1,10 @@
 package com.example.demo.security;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.EqualsAndHashCode;
@@ -16,19 +18,19 @@ public class LoginUserDetail implements UserDetails {
 	 */
 	private final String userid;
 	private final String password;
-//	private final Collection<? extends GrantedAuthority> roles;
+	private final Collection<? extends GrantedAuthority> roles;
 
 	/**
 	 * DI用コンストラクタ
 	 * @param user ユーザーテーブルEntity
 	 */
 	//	@Autowired
-	public LoginUserDetail(String username,String password) {
+	public LoginUserDetail(String username, String password, String roles) {
 		this.userid = username;
 		this.password = password;
-//		this.roles = Arrays.stream(user.getRole().split(","))
-//				.map(role -> new SimpleGrantedAuthority(role))
-//				.toList();
+		this.roles = Arrays.stream(roles.split(","))
+				.map(role -> new SimpleGrantedAuthority(role))
+				.toList();
 	}
 
 	@Override
@@ -46,8 +48,7 @@ public class LoginUserDetail implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO 自動生成されたメソッド・スタブ
-		return null;
-//		return this.roles;
+		return this.roles;
 	}
 
 }

@@ -72,16 +72,19 @@ public class LoginController {
 //			BindingResult result,
 //			Model model) {
 //		System.out.println("forwardLogin");
+//		System.out.println("loginForm:" + form);
+//		System.out.println("validation:" + result);
+//
 //		return "forward:login";
 //	}
-	
+
 	@PostMapping("/login")
 	public String validationCheck(HttpServletRequest req,
 			RedirectAttributes reAtt,
 			@Validated @ModelAttribute LoginForm form,
 			BindingResult result,
 			Model model) {
-		
+
 		System.out.println("login");
 		System.out.println("loginForm:" + form);
 		System.out.println("validation:" + result);
@@ -92,11 +95,11 @@ public class LoginController {
 		}
 		/*****業務処理（サービス層）呼び出し*****/
 		//ユーザーIDまたはパスワードがユーザーテーブルに存在しない場合はエラー、ログイン画面に遷移する
-//		System.out.println("LoginStart");
-//		if (!this.service.login(form.getUsername(), form.getPassword())) {
-//			result.addError(new FieldError(result.getObjectName(), "userId", "ユーザーIDまたはパスワードが間違っています"));
-//			return LOGIN;
-//		}
+		//		System.out.println("LoginStart");
+		//		if (!this.service.login(form.getUsername(), form.getPassword())) {
+		//			result.addError(new FieldError(result.getObjectName(), "userId", "ユーザーIDまたはパスワードが間違っています"));
+		//			return LOGIN;
+		//		}
 		System.out.println("LoginEnd");
 
 		//リダイレクト先へパラメータを渡す
@@ -105,11 +108,11 @@ public class LoginController {
 		return REDIRECT_DASHBOARD;
 	}
 
-//	@PostMapping("/logout")
-//	public String logout(HttpServletRequest req,
-//			@ModelAttribute LoginForm form) {
-//		req.getSession(true).invalidate();
-//
-//		return REDIRECT_LOGOUT;
-//	}
+	//	@PostMapping("/logout")
+	//	public String logout(HttpServletRequest req,
+	//			@ModelAttribute LoginForm form) {
+	//		req.getSession(true).invalidate();
+	//
+	//		return REDIRECT_LOGOUT;
+	//	}
 }

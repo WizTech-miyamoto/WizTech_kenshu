@@ -22,7 +22,7 @@ public class LoginUserDetailService implements UserDetailsService {
 	 * DI用コンストラクタ
 	 * @param repository インフラ層処理
 	 */
-//		@Autowired
+	//		@Autowired
 	public LoginUserDetailService(LoginRepository loginRepository) {
 		this.loginRepository = loginRepository;
 	}
@@ -30,10 +30,13 @@ public class LoginUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("LoginUserDeatailServiceStart");
-		System.out.println("username:"+username);
+		System.out.println("username:" + username);
 		String loginPassword = this.loginRepository.getPassword(username);
-		System.out.println("loginPassword:"+loginPassword);
-		return new LoginUserDetail(username,loginPassword);
+		if (loginPassword == null) {
+			throw new UsernameNotFoundException("入力されたユーザーIDは存在しません：" + username);
+		}
+		System.out.println("loginPassword:" + loginPassword);
+		return new LoginUserDetail(username, loginPassword,"ADMIN");
 	}
 
 }

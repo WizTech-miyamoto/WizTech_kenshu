@@ -49,8 +49,8 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 */
 	@Override
 	public boolean regist(UserEntity user) {
-		String sql = "INSERT INTO users_table (userId,username,password,role,logical_delete_flg) VALUES(?,?,?,?,?)";
-		this.jdbcTemplate.update(sql,user.getUserid(),user.getUsername(),user.getPassword(),user.getRole(),false);
+		String sql = "INSERT INTO users (userId,username,password,role,logical_delete_flg) VALUES(?,?,?,?,?)";
+		this.jdbcTemplate.update(sql, user.getUserid(), user.getUsername(), user.getPassword(), user.getRole(), false);
 		System.out.println("登録処理完了");
 		return true;
 	}
@@ -61,8 +61,8 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 */
 	@Override
 	public boolean update(UserEntity user) {
-		String sql = "UPDATE users_table SET username=?,password=?,role=? WHERE userid=?";
-		this.jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getRole(),user.getUserid());
+		String sql = "UPDATE users SET username=?,password=?,role=? WHERE userid=?";
+		this.jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole(), user.getUserid());
 		System.out.println("更新処理完了");
 		return true;
 	}
@@ -73,8 +73,8 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 */
 	@Override
 	public boolean logicalDelete(UserEntity user) {
-		String sql = "UPDATE users_table SET logical_delete_flg=true WHERE userid=?";
-		this.jdbcTemplate.update(sql,user.getUserid());
+		String sql = "UPDATE users SET logical_delete_flg=true WHERE userid=?";
+		this.jdbcTemplate.update(sql, user.getUserid());
 		System.out.println("削除処理完了");
 		return true;
 	}
@@ -85,8 +85,15 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 */
 	@Override
 	public String getNextUseId() {
-		String sql = "SELECT MAX(userid) AS maxId FROM users_table";
-		int maxUserId = this.jdbcTemplate.queryForObject(sql, int.class) + 1;
+		String sql = "SELECT MAX(userid) AS maxId FROM users";
+		int resultTmp = 0;
+		try {
+			resultTmp = this.jdbcTemplate.queryForObject(sql, int.class);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("最大ユーザーID取得エラー");
+		}
+		int maxUserId = resultTmp + 1;
 		this.nextUserId = "%03d".formatted(maxUserId);
 		return this.nextUserId;
 	}
@@ -97,7 +104,8 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 */
 	@Override
 	public List<UserEntity> getUserList() {
-		this.userList = jdbcTemplate.query("SELECT * FROM users_table WHERE logical_delete_flg=0", new DataClassRowMapper<>(UserEntity.class));
+		this.userList = jdbcTemplate.query("SELECT * FROM users WHERE logical_delete_flg=0",
+				new DataClassRowMapper<>(UserEntity.class));
 		return this.userList;
 	}
 
