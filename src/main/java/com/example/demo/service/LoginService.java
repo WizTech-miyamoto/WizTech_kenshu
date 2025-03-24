@@ -12,9 +12,9 @@ public interface LoginService {
 	 * @return 実行結果
 	 */
 	//20250311 SpringSecurity使用
-	boolean login(String useId,String password);
+	boolean login(String username,String password);
 
 	//旧処理
-//	boolean login(UserEntity user);
+//	boolean login(UsersEntity user);
 
 }

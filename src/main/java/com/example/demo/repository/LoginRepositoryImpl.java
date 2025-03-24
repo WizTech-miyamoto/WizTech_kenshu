@@ -37,14 +37,14 @@ public class LoginRepositoryImpl implements LoginRepository {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public String getPassword(String userid) {
+	public String getPassword(String username) {
 		//		System.out.println("RepositoryStart");
-		String sql = "SELECT password FROM users WHERE userid=?";
+		String sql = "SELECT password FROM users WHERE username=?";
 
 		try {
-			this.loginPassword = jdbcTemplate.queryForObject(sql, String.class, userid);
+			this.loginPassword = jdbcTemplate.queryForObject(sql, String.class, username);
 		} catch (Exception e) {
-			System.out.println("userid is not found : " + e.getMessage());
+			System.out.println("username is not found : " + e.getMessage());
 			return null;
 		}
 		//		System.out.println("GetPassword="+this.loginPassword);

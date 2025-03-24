@@ -113,7 +113,7 @@ input {
 
 .left {
 	height: auto;
-	width: 30%;
+	width: 35%;
 	float: left;
 	text-align: right;
 	/*	outline: 1px solid;*/
@@ -121,7 +121,7 @@ input {
 
 .light {
 	height: auto;
-	width: 70%;
+	width: 65%;
 	float: left;
 	/*	outline: 1px solid;*/
 }

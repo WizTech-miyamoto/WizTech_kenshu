@@ -41,11 +41,11 @@ public class LoginServiceImpl implements LoginService {
 	 * @return ログイン結果 boolean
 	 */
 
-	public boolean login(String userid, String password) {
+	public boolean login(String username, String password) {
 		this.loginResult = false;
 		System.out.println("LoginServiceStart");
 		String inPass = new BCryptPasswordEncoder().encode(password);
-		String dbPass = repository.getPassword(userid);
+		String dbPass = repository.getPassword(username);
 		System.out.println("inPass:"+inPass);
 		System.out.println("dbPass:"+dbPass);
 		if (inPass.equals(dbPass)) {

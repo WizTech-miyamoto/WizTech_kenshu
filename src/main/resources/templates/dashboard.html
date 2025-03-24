@@ -12,13 +12,15 @@
 	<header>
 		<span>ユーザー一覧</span>
 		<span>ログインユーザーID：[[${loginUserId}]]</span>
-		<form th:action="@{/logout}" method="post"><input type="submit" name="logout" class="logButtom" value="ログアウト"></form>
+		<form th:action="@{/logout}" method="post"><input type="submit" name="logout" class="logButtom" value="ログアウト">
+		</form>
 	</header>
 	<main>
 		<div th:if="${userList} != null">
 
 			<div class="buttomArea">
 				<form th:action="@{/userRegist/regist}" method="post">
+					<span class="attention">新規登録はこちら→</span>
 					<input type="submit" name="regist" class="subButtom" value="登録">
 				</form>
 			</div>

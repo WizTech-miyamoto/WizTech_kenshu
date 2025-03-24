@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UsersEntity;
 import com.example.demo.form.UserResistForm;
 import com.example.demo.service.UserRegistService;
 
@@ -47,7 +47,7 @@ public class UserRegistController {
 	/**
 	 * DI用フィールド_ユーザーEntity
 	 */
-	private final UserEntity user;
+	private final UsersEntity user;
 
 	/*****コンストラクタ*****/
 	//	@Autowired
@@ -56,7 +56,7 @@ public class UserRegistController {
 	 * @param service サービス層処理
 	 * @param user ユーザーEntity
 	 */
-	public UserRegistController(UserRegistService service, UserEntity user) {
+	public UserRegistController(UserRegistService service, UsersEntity user) {
 		this.service = service;
 		this.user = user;
 	}
@@ -83,7 +83,7 @@ public class UserRegistController {
 		//		}
 
 		//ユーザーテーブルからユーザー情報のリストを取得する
-		List<UserEntity> userList = this.service.getUserList();
+		List<UsersEntity> userList = this.service.getUserList();
 
 		//		model.addAttribute("loginUserId", form.getUsername());
 		model.addAttribute("userList", userList);
@@ -178,7 +178,7 @@ public class UserRegistController {
 			}
 		}
 		//ユーザーテーブルからユーザー情報のリストを取得する
-		List<UserEntity> userList = this.service.getUserList();
+		List<UsersEntity> userList = this.service.getUserList();
 		model.addAttribute("loginUserId", req.getSession().getAttribute("loginUserId"));
 		model.addAttribute("userList", userList);
 

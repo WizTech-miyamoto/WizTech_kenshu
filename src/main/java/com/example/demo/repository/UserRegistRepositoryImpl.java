@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UsersEntity;
 
 /**
  * ログイン画面_DB処理_実装
@@ -29,7 +29,7 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	/**
 	 * 戻り値（ユーザーリスト）
 	 */
-	private List<UserEntity> userList;
+	private List<UsersEntity> userList;
 
 	/*****コンストラクタ*****/
 
@@ -48,7 +48,7 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean regist(UserEntity user) {
+	public boolean regist(UsersEntity user) {
 		String sql = "INSERT INTO users (userId,username,password,role,logical_delete_flg) VALUES(?,?,?,?,?)";
 		this.jdbcTemplate.update(sql, user.getUserid(), user.getUsername(), user.getPassword(), user.getRole(), false);
 		System.out.println("登録処理完了");
@@ -60,7 +60,7 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean update(UserEntity user) {
+	public boolean update(UsersEntity user) {
 		String sql = "UPDATE users SET username=?,password=?,role=? WHERE userid=?";
 		this.jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole(), user.getUserid());
 		System.out.println("更新処理完了");
@@ -72,7 +72,7 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean logicalDelete(UserEntity user) {
+	public boolean logicalDelete(UsersEntity user) {
 		String sql = "UPDATE users SET logical_delete_flg=true WHERE userid=?";
 		this.jdbcTemplate.update(sql, user.getUserid());
 		System.out.println("削除処理完了");
@@ -100,12 +100,12 @@ public class UserRegistRepositoryImpl implements UserRegistRepository {
 
 	/**
 	 * ユーザーテーブルリスト取得処理_実装
-	 * @return ユーザーテーブルリスト List<UserEntity>
+	 * @return ユーザーテーブルリスト List<UsersEntity>
 	 */
 	@Override
-	public List<UserEntity> getUserList() {
+	public List<UsersEntity> getUserList() {
 		this.userList = jdbcTemplate.query("SELECT * FROM users WHERE logical_delete_flg=0",
-				new DataClassRowMapper<>(UserEntity.class));
+				new DataClassRowMapper<>(UsersEntity.class));
 		return this.userList;
 	}
 

@@ -13,12 +13,14 @@
 		<form th:action="@{/login}" method="post" th:object="${loginForm}">
 			<div class="input_area">
 				<div class="row">
-					<div class="left"><span class="vertical_middel">id:</span></div>
-					<div class="right"><span class="vertical_middel"><input type="text" th:field="*{username}"></span></div>
+					<div class="left"><span class="vertical_middel">ユーザー名:</span></div>
+					<div class="right"><span class="vertical_middel"><input type="text" th:field="*{username}"></span>
+					</div>
 				</div>
 				<div class="row">
-					<div class="left"><span class="vertical_middel">password:</span></div>
-					<div class="right"><span class="vertical_middel"><input type="password" th:field="*{password}"></span></div>
+					<div class="left"><span class="vertical_middel">パスワード:</span></div>
+					<div class="right"><span class="vertical_middel"><input type="password"
+								th:field="*{password}"></span></div>
 				</div>
 			</div>
 			<div class="err_area" th:if="${#fields.hasErrors('*')}">
@@ -26,6 +28,12 @@
 					<li th:each="err:${#fields.errors('*')}" th:text="${err}" class="errorMessage"></li>
 				</ui>
 			</div>
+			<div class="err_area" th:if="${param.error}">
+				<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+					<span class="errorMessage" th:value="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+				</div>
+			</div>
+
 			<input type="submit" value="ログイン" class="logButtom">
 			<a href="/userRegist/regist">テスト登録</a>
 		</form>

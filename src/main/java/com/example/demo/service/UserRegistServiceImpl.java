@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UsersEntity;
 import com.example.demo.repository.UserRegistRepository;
 
 /**
@@ -29,7 +29,7 @@ public class UserRegistServiceImpl implements UserRegistService {
 	/**
 	 * 戻り値（ユーザーリスト）
 	 */
-	private List<UserEntity> userList;
+	private List<UsersEntity> userList;
 
 	/**
 	 * 戻り値(ユーザーID最大値)
@@ -55,7 +55,7 @@ public class UserRegistServiceImpl implements UserRegistService {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean regist(UserEntity user) {
+	public boolean regist(UsersEntity user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		this.registResult = this.repository.regist(user);
 		return this.registResult;
@@ -66,7 +66,7 @@ public class UserRegistServiceImpl implements UserRegistService {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean update(UserEntity user) {
+	public boolean update(UsersEntity user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		this.registResult = this.repository.update(user);
 		return this.registResult;
@@ -77,7 +77,7 @@ public class UserRegistServiceImpl implements UserRegistService {
 	 * @return 実行結果 boolean
 	 */
 	@Override
-	public boolean logicalDelete(UserEntity user) {
+	public boolean logicalDelete(UsersEntity user) {
 		this.registResult = this.repository.logicalDelete(user);
 		return this.registResult;
 	}
@@ -94,10 +94,10 @@ public class UserRegistServiceImpl implements UserRegistService {
 	
 	/**
 	 * ユーザーテーブルリスト取得処理_実装
-	 * @return ユーザーテーブルリスト List<UserEntity>
+	 * @return ユーザーテーブルリスト List<UsersEntity>
 	 */
 	@Override
-	public List<UserEntity> getUserList() {
+	public List<UsersEntity> getUserList() {
 		this.userList = repository.getUserList();
 		return this.userList;
 	}

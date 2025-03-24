@@ -11,6 +11,6 @@ public interface LoginRepository {
 	 * ログイン処理_抽象
 	 * @return ログインユーザーのパスワード
 	 */
-	String getPassword(String userid);
+	String getPassword(String username);
 	
 }

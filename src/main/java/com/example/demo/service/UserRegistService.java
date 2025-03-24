@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UsersEntity;
 
 /**
  * ユーザー登録画面_業務処理_インターフェース
@@ -15,19 +15,19 @@ public interface UserRegistService {
 	 * ユーザー登録処理_抽象
 	 * @return 実行結果
 	 */
-	boolean regist(UserEntity user);
+	boolean regist(UsersEntity user);
 
 	/**
 	 * ユーザー更新処理_抽象
 	 * @return 実行結果
 	 */
-	boolean update(UserEntity user);
+	boolean update(UsersEntity user);
 
 	/**
 	 * ユーザー削除処理_抽象
 	 * @return 実行結果
 	 */
-	boolean logicalDelete(UserEntity user);
+	boolean logicalDelete(UsersEntity user);
 
 	/**
 	 * ユーザーID最大値取得処理_抽象
@@ -38,5 +38,5 @@ public interface UserRegistService {
 	/**ユーザーリスト取得_抽象
 	 * @return
 	 */
-	List<UserEntity> getUserList();
+	List<UsersEntity> getUserList();
 }

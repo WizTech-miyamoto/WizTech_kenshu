@@ -16,7 +16,7 @@ public class LoginUserDetail implements UserDetails {
 	/**
 	 * DI用フィールド_ログイン情報
 	 */
-	private final String userid;
+	private final String username;
 	private final String password;
 	private final Collection<? extends GrantedAuthority> roles;
 
@@ -26,7 +26,7 @@ public class LoginUserDetail implements UserDetails {
 	 */
 	//	@Autowired
 	public LoginUserDetail(String username, String password, String roles) {
-		this.userid = username;
+		this.username = username;
 		this.password = password;
 		this.roles = Arrays.stream(roles.split(","))
 				.map(role -> new SimpleGrantedAuthority(role))
@@ -42,7 +42,7 @@ public class LoginUserDetail implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.userid;
+		return this.username;
 	}
 
 	@Override

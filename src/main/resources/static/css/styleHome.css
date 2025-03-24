@@ -54,7 +54,7 @@ table th {
 	border-bottom: 1px solid gray;
 	padding: 10px 0;
 	position: sticky;
-	top:0;
+	top: 0;
 }
 
 table td {
@@ -66,9 +66,9 @@ table td {
 }
 
 table td:first-child {
-	width:200px;
+	width: 200px;
 	border-left: 2px solid darkslategray;
-	width:120px;
+	width: 120px;
 }
 
 table td:last-child {
@@ -97,4 +97,10 @@ table tr:last-child td:last-child {
 	width: 100%;
 	height: 600px;
 	overflow-y: scroll;
+}
+
+.attention {
+	font-weight: bold;
+	font-size: large;
+	color: red;
 }
